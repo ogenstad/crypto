@@ -91,7 +91,9 @@ func (b *buffer) Read(buf []byte) (n int, err error) {
 			break
 		}
 		// out of buffers, wait for producer
-		b.Cond.Wait()
+		// b.Cond.Wait()
+		// Avoid blocking read, just return to caller if there is nothing to be read
+		return 0, nil
 	}
 	return
 }
